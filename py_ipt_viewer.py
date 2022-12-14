@@ -7,6 +7,10 @@
 # Comment      : This file is part of py firewall log viewer.
 # ----------------------------------------------------------------------------
 
+"""
+A program to parse iptables logs and display them in a pretty console interface.
+"""
+
 import re
 from rich.console import Console
 from rich.table import Table
