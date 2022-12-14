@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ----------------------------------------------------------------------------
-# Filename     : py_fwlog_view.py
+# Filename     : py_ipt_viewer.py
 # Author       : James Dunne <james.dunne1@gmail.com>
 # License      : GPL-3.0
-# Comment      : This file is part of py firewall log viewer.
+# Comment      : This file is part of py iptables log viewer.
 # ----------------------------------------------------------------------------
 
 """
