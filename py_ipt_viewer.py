@@ -13,16 +13,17 @@ A simple program to parse iptables logs and display them in a console interface.
 
 import re
 import socket
+from collections import Counter
 from file_read_backwards import FileReadBackwards
 from rich.console import Console
 from rich.table import Table
 from rich.progress import track
 
 # Set iptables log file name and path.
-log_file_name = "var\log\iptables.log"
+log_file_name = "iptables.log"
 
 # Set iptables input chain log.
-input_chain_logname = r"INPUT:BLOCKED"
+input_chain_logname = r"IPTABLES:BLOCKED-CONN:"
 
 # Set the number of log lines to display. 
 lines_to_show = 20
@@ -50,6 +51,7 @@ def py_ipt_viewer():
                      style="light_slate_grey", no_wrap=True)
     grouping_re = re.compile('([^ ]+)=([^ ]+)')
     log_line_count = 0
+    iplist = []
     # Pass log_file_name to FileReadsBackwards module.
     with FileReadBackwards(log_file_name, encoding="utf-8") as log_file:
         for log_line in log_file:
@@ -59,6 +61,7 @@ def py_ipt_viewer():
                 date_time = parse_date_time(log_line)
                 chain = parse_chain(log_line)
                 ipaddr = data['SRC']
+                iplist.append(ipaddr)
                 hostname = get_hostname(ipaddr)
                 table.add_row(date_time, chain, data['IN'],  data['PROTO'],
                 data['SRC'], data['SPT'], data['DST'], data['DPT'], data['TTL'], hostname)
@@ -69,6 +72,11 @@ def py_ipt_viewer():
     with open(log_file_name, 'r') as log_file_count:
         total_log_count = len(log_file_count.readlines())
     print(f"Total Log Entires in Log File: {total_log_count}")
+    ipcount = [ite for ite in Counter(iplist).most_common()]
+    print("\nMost Commonly Blocked IP Addresses")
+    print("----------------------------------")
+    for x in ipcount:
+        print(f'IP Address: {x[0]} | Hits: {x[1]}')
     print("\n")
 
 def parse_date_time(log_line):
