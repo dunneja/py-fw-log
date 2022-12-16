@@ -20,7 +20,7 @@ from rich.table import Table
 from rich.progress import track
 
 # Set iptables log file name and path.
-log_file_name = "iptables.log"
+log_file_name = "var/log/iptables.log"
 
 # Set iptables input chain log.
 input_chain_logname = r"IPTABLES:BLOCKED-CONN:"
