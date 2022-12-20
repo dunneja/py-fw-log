@@ -8,7 +8,7 @@
 # ----------------------------------------------------------------------------
 
 """
-py-fw-log command line interface to parse iptables/firewalld log files.
+py-fw-log command line interface to parse iptables log files.
 """
 
 import sys
@@ -19,7 +19,7 @@ def pyfwlog(argv):
     arg_log_file_name = ""
     arg_lines_to_show = ""
     arg_dns = ""
-    arg_help = "{0} Usage: pyfwlog -l <logfile> -s <showlines> -d (Enables DNS resolution)".format(argv[0])    
+    arg_help = "{0} Usage: pyfwlog -l <logfile> -s <showlines> -d [DNS Lookup]".format(argv[0])    
     try:
         opts, args = getopt.getopt(argv[1:], "hi:l:s:d", ["help", "log_file_name=", 
         "lines_to_show=", "dns="])
@@ -28,7 +28,7 @@ def pyfwlog(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-h", "--help"):
-            print(arg_help)  # print the help message
+            print(arg_help)
             sys.exit(2)
         elif opt in ("-l", "--logfile"):
             arg_log_file_name = arg
