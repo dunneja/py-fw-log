@@ -44,10 +44,10 @@ or
         - pip3 install -r requirements.txt
         
     - Linux Command Alias
-        - Add the following to ~/.bashrc
-            if [ -f ~/.bash_aliases ]; then
+        - Add the following to ~/.bashrc 
+            'if [ -f ~/.bash_aliases ]; then
             . ~/.bash_aliases
-            fi
+            fi'
         - Add the following to ~/.bash_aliases
           alias pyfwlog='python3 /home/<username>/py-fw-log/py_fw_log.py'
         - run 'source ~/.bashrc'
