@@ -38,7 +38,8 @@ or
     - Ensure Python is added to environment SYS Path.
 
     - Clone this repo to local file system. (i.e home directory)
-
+        - git clone https://github.com/dunneja/py-fw-log
+        
     - Install deps from the provided requirements.txt file as per below;
  
         - pip3 install -r requirements.txt
