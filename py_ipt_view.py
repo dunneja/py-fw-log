@@ -4,11 +4,11 @@
 # Filename     : py_ipt_view.py
 # Author       : Dunneja
 # License      : MIT-license
-# Comment      : This file is part of py iptables log viewer.
+# Comment      : This file is part of py-fw-log.
 # ----------------------------------------------------------------------------
 
 """
-A simple program to parse iptables logs and display them in a console interface.
+A program to parse iptables logs and display them in a console interface.
 """
 
 import re
@@ -22,9 +22,10 @@ class fw_log_view():
     """
     Class to view iptables / firewalld log file entries. 
     """
-    def __init__(self, log_file_name, lines_to_show):
+    def __init__(self, log_file_name, lines_to_show, dns=False):
         self.log_file_name = log_file_name
         self.lines_to_show = lines_to_show
+        self.dns = dns
         self.main()
 
     def main(self):
@@ -40,7 +41,7 @@ class fw_log_view():
                 self.log_line_count = 0
                 grouping_re = re.compile('([^ ]+)=([^ ]+)')
                 print("\n")
-                table = Table(title="Py IPTables Log Viewer",
+                table = Table(title="Py Firewall Log Viewer",
                     show_header=True, caption=self.log_file_name)
                 table.add_column(
                     "Date & Time", justify="center", style="cyan", no_wrap=True)
@@ -55,7 +56,7 @@ class fw_log_view():
                     style="bright_red", no_wrap=True)
                 table.add_column("TTL", justify="center",
                     style="light_slate_grey", no_wrap=True)
-                # table.add_column("Hostname", justify="center", style="light_slate_grey", no_wrap=True)
+                table.add_column("Hostname", justify="center", style="light_slate_grey", no_wrap=True)
                 with FileReadBackwards(self.log_file_name, encoding="utf-8") as log_file:
                     for log_line in log_file:
                         if self.log_line_count < self.lines_to_show:
@@ -66,10 +67,12 @@ class fw_log_view():
                             self.ports = self.data['SPT']
                             self.iplist.append(self.ipaddr)
                             self.portlist.append(self.ports)
-                            #self.hostname = self.get_hostname(self.ipaddr)
+                            if self.dns == True:
+                                self.hostname = self.get_hostname(self.ipaddr)
+                            else:
+                                self.hostname = "-"
                             self.log_line_count += 1
-                            table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'], self.data[
-                                'SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'])
+                            table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'], self.data[ 'SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'],self.hostname)
                 console = Console()
                 console.print(table)
                 input("\nPress 'Enter' to show log viewer summary or 'CTRL-C' to Quit...\n")
@@ -117,7 +120,8 @@ class fw_log_view():
         resolve ip address to hostname.
         """
         try:
+            socket.setdefaulttimeout(5)
             hostname = socket.gethostbyaddr(ipaddr)
-        except Exception:
+        except socket.error:
             hostname = '-'
         return hostname[0]
