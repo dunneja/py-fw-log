@@ -20,7 +20,7 @@ from rich.table import Table
 
 class fw_log_view():
     """
-    Class to view iptables / firewalld log file entries. 
+    Class to view iptables log file entries. 
     """
     def __init__(self, log_file_name, lines_to_show, dns=False):
         self.log_file_name = log_file_name
