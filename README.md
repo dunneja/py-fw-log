@@ -3,11 +3,11 @@
 
 ## Tables of Conents
 
-*[General Info](#general-information)
-*[Usage](#usage)
-*[Screenshot](#screenshot)
-*[Setup](#setup)
-*[Notes](#notes)
+* [General Info](#general-information)
+* [Usage](#usage)
+* [Screenshot](#screenshot)
+* [Setup](#setup)
+* [Notes](#notes)
 
 ## General Information
 
