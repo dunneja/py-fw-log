@@ -23,7 +23,7 @@
 or
 
 - Follow the Linux command Alias setup documented in the setup section to use the following command.
-    - pyfwlog -l <LogFile> -s <LinesToShow> -d [DNS Lookup]
+    - pyfwlog -l LogFile -s LinesToShow -d [DNS Lookup]
 
 ## Screenshots
 
