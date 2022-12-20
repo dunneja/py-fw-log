@@ -5,7 +5,7 @@
 
 * [General Info](#general-information)
 * [Usage](#usage)
-* [Screenshot](#screenshot)
+* [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Notes](#notes)
 
