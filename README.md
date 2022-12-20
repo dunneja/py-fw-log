@@ -18,7 +18,7 @@
 
 ## Usage
 
-python py-fw-log.py -l "<logfile>" -s <LinesToShow> -d [DNS Lookup]
+python py-fw-log.py -l <LogFile> -s <LinesToShow> -d [DNS Lookup]
 
 ## Screenshots
 
