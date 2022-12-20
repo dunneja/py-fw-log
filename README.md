@@ -50,7 +50,7 @@ or
             . ~/.bash_aliases
             fi'
         - Add the following to ~/.bash_aliases
-          alias pyfwlog='python3 /home/<username>/py-fw-log/py_fw_log.py'
+          alias pyfwlog='python3 /home/username/py-fw-log/py_fw_log.py'
         - run 'source ~/.bashrc'
         - run pyfwlog -h for usage / options.
 
