@@ -11,6 +11,9 @@
 A program to parse iptables logs and display them in a console interface.
 """
 
+# TODO: Implement an igore IP function
+# TODO: Implement service name to ports lookup (iana.org)
+
 import sys
 import re
 import getopt
@@ -27,10 +30,11 @@ def py_fw_log(argv):
     arg_log_file_name = ""
     arg_lines_to_show = ""
     arg_dns = ""
-    arg_help = "{0} Usage: pyfwlog -l <logfile> -s <showlines> -d (Enables DNS resolution)".format(argv[0])    
+    arg_help = "{0} Usage: pyfwlog -l <logfile> -s <showlines> -d (Enables DNS resolution)".format(
+        argv[0])
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:l:s:d", ["help", "log_file_name=", 
-        "lines_to_show=", "dns="])
+        opts = getopt.getopt(argv[1:], "hi:l:s:d", ["help", "log_file_name=",
+                                                    "lines_to_show=", "dns="])
     except:
         print(arg_help)
         sys.exit(2)
@@ -43,7 +47,7 @@ def py_fw_log(argv):
         elif opt in ("-s", "--showlines"):
             arg_lines_to_show = arg
         elif opt in ("-d", "--dns"):
-            arg_dns = True       
+            arg_dns = True
     fw_log_view(arg_log_file_name, int(arg_lines_to_show), arg_dns)
 
 class fw_log_view():
@@ -70,21 +74,22 @@ class fw_log_view():
                 grouping_re = re.compile('([^ ]+)=([^ ]+)')
                 print("\n")
                 table = Table(title="Py Firewall Log Viewer",
-                    show_header=True, caption=self.log_file_name)
+                              show_header=True, caption=self.log_file_name)
                 table.add_column(
                     "Date & Time", justify="center", style="cyan", no_wrap=True)
                 table.add_column("NIC", justify="center", style="green")
                 table.add_column("PROTO", justify="center",
-                    style="royal_blue1")
+                                 style="royal_blue1")
                 table.add_column("SRC IP", justify="center",
-                    style="dark_orange3")
+                                 style="dark_orange3")
                 table.add_column("SPT", justify="center", style="gold1")
                 table.add_column("DST IP", justify="center", style="plum2")
                 table.add_column("DPT", justify="center",
-                    style="bright_red", no_wrap=True)
+                                 style="bright_red", no_wrap=True)
                 table.add_column("TTL", justify="center",
-                    style="light_slate_grey", no_wrap=True)
-                table.add_column("Hostname", justify="center", style="light_slate_grey", no_wrap=True)
+                                 style="light_slate_grey", no_wrap=True)
+                table.add_column("Hostname", justify="center",
+                                 style="light_slate_grey", no_wrap=True)
                 with FileReadBackwards(self.log_file_name, encoding="utf-8") as log_file:
                     for log_line in log_file:
                         if self.log_line_count < self.lines_to_show:
@@ -92,7 +97,7 @@ class fw_log_view():
                             self.data = dict(grouping_re.findall(log_line))
                             self.date = log_line.split()
                             self.ipaddr = self.data['SRC']
-                            self.ports = self.data['SPT']
+                            self.ports = self.data['DPT']
                             self.iplist.append(self.ipaddr)
                             self.portlist.append(self.ports)
                             if self.dns == True:
@@ -100,17 +105,20 @@ class fw_log_view():
                             else:
                                 self.hostname = "-"
                             self.log_line_count += 1
-                            table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'], self.data[ 'SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'],self.hostname)
+                            table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'],
+                                          self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'], self.hostname)
                 console = Console()
                 console.print(table)
-                input("\nPress 'Enter' to show log viewer summary or 'CTRL-C' to Quit...\n")
+                input(
+                    "\nPress 'Enter' to show log viewer summary or 'CTRL-C' to Quit...\n")
                 self.ip_sum()
                 self.ports_sum()
                 print(f"\nTotal Log lines Parsed: {str(self.log_line_count)}")
                 with open(self.log_file_name, 'r') as log_file_count:
                     total_log_count = len(log_file_count.readlines())
-                print(f"Total Blocked Entires in Log File: {total_log_count}\n")
-                self.main = False 
+                print(
+                    f"Total Blocked Entires in Log File: {total_log_count}\n")
+                self.main = False
         except KeyboardInterrupt:
             pass
 
