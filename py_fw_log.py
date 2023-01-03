@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # ----------------------------------------------------------------------------
-# Filename     : py_ipt_view.py
+# Filename     : py_fw_log.py
 # Author       : Dunneja
 # License      : MIT-license
-# Comment      : This file is part of py-fw-log.
+# Comment      : This file is part of py-fw-log viewer.
 # ----------------------------------------------------------------------------
 
 """
@@ -20,7 +20,7 @@ from rich.console import Console
 from collections import Counter
 from file_read_backwards import FileReadBackwards
 
-def pyfwlog(argv):
+def py_fw_log(argv):
     """
     py-fw-log command line interface to parse iptables/firewalld log files.
     """
@@ -155,4 +155,4 @@ class fw_log_view():
         return hostname[0]
 
 if __name__ == "__main__":
-    pyfwlog(sys.argv)
+    py_fw_log(sys.argv)
