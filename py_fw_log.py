@@ -11,8 +11,7 @@
 A program to parse iptables logs and display them in a console interface.
 """
 
-# TODO: Implement an igore IP function
-# TODO: Implement service name to ports lookup (iana.org)
+# TODO: Implement service name to ports lookup (iana.org).
 
 import sys
 import re
@@ -30,11 +29,12 @@ def py_fw_log(argv):
     arg_log_file_name = ""
     arg_lines_to_show = ""
     arg_dns = ""
-    arg_help = "{0} Usage: pyfwlog -l <logfile> -s <showlines> -d (Enables DNS resolution)".format(
+    arg_ignore_ip = ""
+    arg_help = "{0} Usage: pyfwlog -l <logfile> -s <showlines> -i <ignore_ip> -d (Enables DNS resolution)".format(
         argv[0])
     try:
-        opts = getopt.getopt(argv[1:], "hi:l:s:d", ["help", "log_file_name=",
-                                                    "lines_to_show=", "dns="])
+        opts, args = getopt.getopt(argv[1:], "hi:l:s:d:i", ["help", "log_file_name=",
+                                                    "lines_to_show=", "ignore_ip=", "dns="])
     except:
         print(arg_help)
         sys.exit(2)
@@ -46,18 +46,21 @@ def py_fw_log(argv):
             arg_log_file_name = arg
         elif opt in ("-s", "--showlines"):
             arg_lines_to_show = arg
+        elif opt in ("-i", "--ignoreip"):
+            arg_ignore_ip = arg
         elif opt in ("-d", "--dns"):
             arg_dns = True
-    fw_log_view(arg_log_file_name, int(arg_lines_to_show), arg_dns)
+    fw_log_view(arg_log_file_name, int(arg_lines_to_show), arg_ignore_ip, arg_dns)
 
 class fw_log_view():
     """
     Class to view iptables log file entries. 
     """
-    def __init__(self, log_file_name, lines_to_show, dns=False):
+    def __init__(self, log_file_name, lines_to_show, ignore_ip, dns=False):
         self.log_file_name = log_file_name
         self.lines_to_show = lines_to_show
         self.dns = dns
+        self.ignore_ip = ignore_ip
         self.main()
 
     def main(self):
@@ -98,15 +101,21 @@ class fw_log_view():
                             self.date = log_line.split()
                             self.ipaddr = self.data['SRC']
                             self.ports = self.data['DPT']
-                            self.iplist.append(self.ipaddr)
-                            self.portlist.append(self.ports)
+                            if self.ipaddr != self.ignore_ip:
+                                self.iplist.append(self.ipaddr)
+                                self.portlist.append(self.ports)
+                            else:
+                                pass
                             if self.dns == True:
                                 self.hostname = self.get_hostname(self.ipaddr)
                             else:
                                 self.hostname = "-"
-                            self.log_line_count += 1
-                            table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'],
-                                          self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'], self.hostname)
+                            if self.ignore_ip == self.ipaddr:
+                                pass
+                            else:
+                                self.log_line_count += 1
+                                table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'],
+                                    self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'], self.hostname)
                 console = Console()
                 console.print(table)
                 input(
