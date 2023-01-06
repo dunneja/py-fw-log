@@ -6,13 +6,9 @@
 # License      : MIT-license
 # Comment      : This file is part of py-fw-log viewer.
 # ----------------------------------------------------------------------------
-
 """
 A program to parse iptables logs and display them in a console interface.
 """
-
-# TODO: Implement service name to ports lookup (iana.org).
-
 import sys
 import re
 import getopt
@@ -89,11 +85,11 @@ class fw_log_view():
                 table.add_column("DST IP", justify="center", style="plum2")
                 table.add_column("DPT", justify="center",
                                  style="bright_red", no_wrap=True)
+                table.add_column("Service", justify="center",
+                                 style="light_slate_grey", no_wrap=True)
                 table.add_column("TTL", justify="center",
                                  style="light_slate_grey", no_wrap=True)
                 table.add_column("Hostname", justify="center",
-                                 style="light_slate_grey", no_wrap=True)
-                table.add_column("Service", justify="center",
                                  style="light_slate_grey", no_wrap=True)
                 with FileReadBackwards(self.log_file_name, encoding="utf-8") as log_file:
                     for log_line in log_file:
@@ -118,8 +114,7 @@ class fw_log_view():
                             else:
                                 self.log_line_count += 1
                                 table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'],
-                                    self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'], self.hostname,self.service_on_port(23820, self.proto))
-                                    #self.service_on_port(int(self.ports), self.proto)
+                                    self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.service_on_port(int(self.ports), self.proto), self.data['TTL'], self.hostname)
                 console = Console()
                 console.print(table)
                 input(
@@ -176,13 +171,13 @@ class fw_log_view():
         return hostname[0]
 
     def service_on_port(self, portNumber, protocol):
-        
-        serviceName = socket.getservbyport(portNumber, protocol)
+        """
+        get service by port number. 
+        """
         try:
-
-        except  as error:
-            print(error)
-
+            serviceName = socket.getservbyport(portNumber, protocol)
+        except OSError as error:
+            serviceName = "-"
         return serviceName
 
 if __name__ == "__main__":
