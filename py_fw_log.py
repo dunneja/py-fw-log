@@ -20,7 +20,7 @@ from file_read_backwards import FileReadBackwards
 
 def py_fw_log(argv):
     """
-    py-fw-log command line interface to parse iptables/firewalld log files.
+    py-fw-log command line interface to parse iptables log file.
     """
     arg_log_file_name = ""
     arg_lines_to_show = ""
@@ -29,8 +29,8 @@ def py_fw_log(argv):
     arg_help = "{0} Usage: pyfwlog -l <logfile> -s <showlines> -i <ignore_ip> -d (Enables DNS resolution)".format(
         argv[0])
     try:
-        opts, args = getopt.getopt(argv[1:], "hi:l:s:d:i", ["help", "log_file_name=",
-                                                    "lines_to_show=", "ignore_ip=", "dns="])
+        opts, args = getopt.getopt(argv[1:], "hi:l:s:i:d", ["help", "log_file_name=",
+                                                            "lines_to_show=", "ignore_ip=", "dns="])
     except:
         print(arg_help)
         sys.exit(2)
@@ -46,7 +46,8 @@ def py_fw_log(argv):
             arg_ignore_ip = arg
         elif opt in ("-d", "--dns"):
             arg_dns = True
-    fw_log_view(arg_log_file_name, int(arg_lines_to_show), arg_ignore_ip, arg_dns)
+    fw_log_view(arg_log_file_name, int(
+        arg_lines_to_show), arg_ignore_ip, arg_dns)
 
 class fw_log_view():
     """
@@ -114,7 +115,7 @@ class fw_log_view():
                             else:
                                 self.log_line_count += 1
                                 table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'],
-                                    self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.service_on_port(int(self.ports), self.proto), self.data['TTL'], self.hostname)
+                                              self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.service_on_port(int(self.ports), self.proto), self.data['TTL'], self.hostname)
                 console = Console()
                 console.print(table)
                 input(
@@ -170,15 +171,15 @@ class fw_log_view():
             hostname = '-'
         return hostname[0]
 
-    def service_on_port(self, portNumber, protocol):
+    def service_on_port(self, port_number, protocol):
         """
         get service by port number. 
         """
         try:
-            serviceName = socket.getservbyport(portNumber, protocol)
+            service_name = socket.getservbyport(port_number, protocol)
         except OSError as error:
-            serviceName = "-"
-        return serviceName
+            service_name = "-"
+        return service_name
 
 if __name__ == "__main__":
     py_fw_log(sys.argv)
