@@ -93,6 +93,8 @@ class fw_log_view():
                                  style="light_slate_grey", no_wrap=True)
                 table.add_column("Hostname", justify="center",
                                  style="light_slate_grey", no_wrap=True)
+                table.add_column("Service", justify="center",
+                                 style="light_slate_grey", no_wrap=True)
                 with FileReadBackwards(self.log_file_name, encoding="utf-8") as log_file:
                     for log_line in log_file:
                         if self.log_line_count < self.lines_to_show:
@@ -101,6 +103,7 @@ class fw_log_view():
                             self.date = log_line.split()
                             self.ipaddr = self.data['SRC']
                             self.ports = self.data['DPT']
+                            self.proto = self.data['PROTO']
                             if self.ipaddr != self.ignore_ip:
                                 self.iplist.append(self.ipaddr)
                                 self.portlist.append(self.ports)
@@ -115,7 +118,8 @@ class fw_log_view():
                             else:
                                 self.log_line_count += 1
                                 table.add_row(self.date[0]+" "+self.date[1]+" "+self.date[2]+" ", self.data['IN'], self.data['PROTO'],
-                                    self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'], self.hostname)
+                                    self.data['SRC'], self.data['SPT'], self.data['DST'], self.data['DPT'], self.data['TTL'], self.hostname,self.service_on_port(23820, self.proto))
+                                    #self.service_on_port(int(self.ports), self.proto)
                 console = Console()
                 console.print(table)
                 input(
@@ -170,6 +174,16 @@ class fw_log_view():
         except socket.error:
             hostname = '-'
         return hostname[0]
+
+    def service_on_port(self, portNumber, protocol):
+        
+        serviceName = socket.getservbyport(portNumber, protocol)
+        try:
+
+        except  as error:
+            print(error)
+
+        return serviceName
 
 if __name__ == "__main__":
     py_fw_log(sys.argv)
