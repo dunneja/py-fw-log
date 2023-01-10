@@ -18,12 +18,12 @@
 
 ## Usage
 
-- python3 py-fw-log.py -l LogFile -s LinesToShow -d [DNS Lookup]
+- python3 py-fw-log.py -l LogFile -s LinesToShow -i ignore_ipaddress -d [DNS Lookup]
 
 or
 
 - Follow the Linux command Alias setup documented in the setup section to use the following command.
-    - pyfwlog -l LogFile -s LinesToShow -d [DNS Lookup]
+    - pyfwlog -l LogFile -s LinesToShow -i ignore_ipaddress -d [DNS Lookup]
 
 ## Screenshots
 
@@ -57,5 +57,4 @@ or
 ## Notes
 
    - Only supports IPV4 IPTables log files.
-   - Will look to add firewalld log files in the future.
    - Tested on ubuntu + iptables. 
