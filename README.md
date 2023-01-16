@@ -40,29 +40,38 @@ pyfwlog -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
     - Ensure Python is added to environment SYS Path.
 
     - Clone this repo to local file system. (i.e home directory)
+    - 
         ```
         git clone https://github.com/dunneja/py-fw-log
         ```
         
     - Install deps from the provided requirements.txt file as per below;
+    - 
         ```
         pip3 install -r requirements.txt
         ```
+        
     - Linux Command Alias
         - Add the following to ~/.bashrc
+        
         ``` 
         if [ -f ~/.bash_aliases ]; then
             . ~/.bash_aliases
         fi
         ```
+        
         - Add the following to ~/.bash_aliases
+        
         ```
         alias pyfwlog='python3 /home/username/py-fw-log/py_fw_log.py'
         ```
+        
         - run 
+        
         ```
         source ~/.bashrc'
         ```
+        
         - run pyfwlog -h for usage / options.
 
 ## Notes
