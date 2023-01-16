@@ -17,12 +17,15 @@
 - The Program provides DNS resolution of IP Addresses (Optional).
 
 ## Usage
+
 ```
 python3 py-fw-log.py -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
 ```
+
 or
 
 - Follow the Linux command Alias setup documented in the setup section to use the following command.
+
 ```
 pyfwlog -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
 ```
@@ -40,18 +43,19 @@ pyfwlog -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
     - Ensure Python is added to environment SYS Path.
 
     - Clone this repo to local file system. (i.e home directory)
-    - 
+    
         ```
         git clone https://github.com/dunneja/py-fw-log
         ```
         
     - Install deps from the provided requirements.txt file as per below;
-    - 
+    
         ```
         pip3 install -r requirements.txt
         ```
         
     - Linux Command Alias
+    
         - Add the following to ~/.bashrc
         
         ``` 
@@ -66,7 +70,7 @@ pyfwlog -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
         alias pyfwlog='python3 /home/username/py-fw-log/py_fw_log.py'
         ```
         
-        - run 
+        - run source update
         
         ```
         source ~/.bashrc'
