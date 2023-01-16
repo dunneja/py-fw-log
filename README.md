@@ -18,7 +18,7 @@
 
 ## Usage
 ```
-- python3 py-fw-log.py -l LogFile -s LinesToShow -i ignore_ipaddress -d [DNS Lookup]
+python3 py-fw-log.py -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
 ```
 or
 
