@@ -23,7 +23,9 @@ python3 py-fw-log.py -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS
 or
 
 - Follow the Linux command Alias setup documented in the setup section to use the following command.
-    - pyfwlog -l LogFile -s LinesToShow -i ignore_ipaddress -d [DNS Lookup]
+```
+pyfwlog -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
+```
 
 ## Screenshots
 
@@ -38,20 +40,29 @@ or
     - Ensure Python is added to environment SYS Path.
 
     - Clone this repo to local file system. (i.e home directory)
-        - git clone https://github.com/dunneja/py-fw-log
+        ```
+        git clone https://github.com/dunneja/py-fw-log
+        ```
         
     - Install deps from the provided requirements.txt file as per below;
- 
-        - pip3 install -r requirements.txt
-        
+        ```
+        pip3 install -r requirements.txt
+        ```
     - Linux Command Alias
-        - Add the following to ~/.bashrc 
-            'if [ -f ~/.bash_aliases ]; then
+        - Add the following to ~/.bashrc
+        ``` 
+        if [ -f ~/.bash_aliases ]; then
             . ~/.bash_aliases
-            fi'
+        fi
+        ```
         - Add the following to ~/.bash_aliases
-          alias pyfwlog='python3 /home/username/py-fw-log/py_fw_log.py'
-        - run 'source ~/.bashrc'
+        ```
+        alias pyfwlog='python3 /home/username/py-fw-log/py_fw_log.py'
+        ```
+        - run 
+        ```
+        source ~/.bashrc'
+        ```
         - run pyfwlog -h for usage / options.
 
 ## Notes
