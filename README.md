@@ -19,7 +19,7 @@
 ## Usage
 
 ```
-python3 py-fw-log.py -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
+python3 py-fw-log.py -l <LogFile> -s <LinesToShow> -p <ignore_spt> -d [DNS Lookup]
 ```
 
 or
@@ -27,7 +27,7 @@ or
 - Follow the Linux command Alias setup documented in the setup section to use the following command.
 
 ```
-pyfwlog -l <LogFile> -s <LinesToShow> -i <ignore_ipaddress> -d [DNS Lookup]
+pyfwlog -l <LogFile> -s <LinesToShow> -p <ignore_spt> -d [DNS Lookup]
 ```
 
 ## Screenshots
