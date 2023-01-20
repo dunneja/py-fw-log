@@ -1,5 +1,5 @@
 # Py Firewall Log Viewer
-- Python IPTables/Firewalld Log Viewer
+- Python IPTables/Firewalld Console Log Viewer
 
 ## Tables of Conents
 
