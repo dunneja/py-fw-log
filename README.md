@@ -1,5 +1,5 @@
-# Py Firewall Log View
-- Python IPTables Log Viewer
+# Py Firewall Log Viewer
+- Python IPTables/Firewalld Log Viewer
 
 ## Tables of Conents
 
@@ -11,7 +11,7 @@
 
 ## General Information
 
-- A Python program to parse iptables log files and present the information in a console table.
+- A Python program to parse iptables or firewalld log files and present the information in a console table.
 - The Program provides a summary of IP address total hits.
 - The Program provides a summary of Ports total hits.
 - The Program provides DNS resolution of IP Addresses (Optional).
@@ -19,7 +19,7 @@
 ## Usage
 
 ```
-python3 py-fw-log.py -l <LogFile> -s <LinesToShow> -p <ignore_spt> -d [DNS Lookup]
+python3 py-fw-log.py -l <LogFile> -s <LinesToShow> -p <ignore_dpt> -d [DNS Lookup]
 ```
 
 or
@@ -27,7 +27,7 @@ or
 - Follow the Linux command Alias setup documented in the setup section to use the following command.
 
 ```
-pyfwlog -l <LogFile> -s <LinesToShow> -p <ignore_spt> -d [DNS Lookup]
+pyfwlog -l <LogFile> -s <LinesToShow> -p <ignore_dpt> -d [DNS Lookup]
 ```
 
 ## Screenshots
@@ -80,5 +80,6 @@ pyfwlog -l <LogFile> -s <LinesToShow> -p <ignore_spt> -d [DNS Lookup]
 
 ## Notes
 
-   - Only supports IPV4 IPTables log files.
-   - Tested on ubuntu + iptables. 
+   - Supports IPV4/IPV6 IPTables or Firewalld log files.
+   - Tested on ubuntu + iptables.
+   - Tested on fedora + firewalld.
